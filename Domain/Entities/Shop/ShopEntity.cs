@@ -25,7 +25,7 @@ public class ShopEntity : BaseEntity
 
     public ShopEntity() {}
 
-    public ShopEntity(string name, int minStockProducts, Guid attributeType, Guid shopTypeId, Guid? logoId) {
+    public ShopEntity(string name, int minStockProducts, Guid shopTypeId, Guid? logoId) {
         Id = Guid.NewGuid();
         Name = name;
         MinStockProducts = minStockProducts;

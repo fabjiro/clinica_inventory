@@ -30,6 +30,7 @@ public partial class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(u => u.AvatarId)
             .OnDelete(DeleteBehavior.Restrict);
+        
         modelBuilder.Entity<ShopEntity>().Property(e => e.LogoId).IsRequired().HasDefaultValue(Guid.Parse(DefaulConst.DefaultImageShop));
 
 

@@ -20,9 +20,9 @@ var builder = WebApplication.CreateBuilder(args);
             policy.Requirements.Add(new RolesRequirement(
                 Guid.Parse(RolConst.Admin)
             )));
-        options.AddPolicy("AdminOrSeller", policy =>
+        options.AddPolicy("AdminOrReception", policy =>
             policy.Requirements.Add(new RolesRequirement(
-                [Guid.Parse(RolConst.Admin), Guid.Parse(RolConst.Seller)]
+                [Guid.Parse(RolConst.Admin), Guid.Parse(RolConst.Reception)]
             )));
     });
 

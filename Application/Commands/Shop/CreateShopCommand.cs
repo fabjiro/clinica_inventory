@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Commands.Shop;
 
-public record CreateShopCommand(string UserId, string Name,int MinStockProducts, Guid ShopTypeId, Guid AttributeId, string? Image) : IRequest<Result<ShopResponseDto>>;
+public record CreateShopCommand(string UserId, string Name,int MinStockProducts, Guid ShopTypeId, string? Image) : IRequest<Result<ShopResponseDto>>;

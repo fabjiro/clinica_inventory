@@ -45,7 +45,6 @@ public class CreateShopCommandHanlder : IRequestHandler<CreateShopCommand, Resul
             var shopEntity = new ShopEntity(
                 request.Name,
                 request.MinStockProducts,
-                request.AttributeId,
                 request.ShopTypeId,
                 null
             );

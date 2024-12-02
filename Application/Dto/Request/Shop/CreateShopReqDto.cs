@@ -10,9 +10,6 @@ public class CreateShopReqDto
     [Required(ErrorMessage = "MinStockProducts is required")]
     public int MinStockProducts { get; set; }
 
-    [Required(ErrorMessage = "AttributeId is required")]
-    public string Attribute { get; set; } = null!;
-
     [Required(ErrorMessage = "ShopTypeId is required")]
     public string ShopType { get; set; } = null!;
     public string? Logo { get; set; }

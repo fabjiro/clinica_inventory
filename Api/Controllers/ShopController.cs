@@ -32,7 +32,6 @@ public class ShopController : ControllerBase
                 dto.Name,
                 dto.MinStockProducts,
                 Guid.Parse(dto.ShopType),
-                Guid.Parse(dto.Attribute),
                 dto.Logo
             );
 
