@@ -15,17 +15,15 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
 {
     private readonly IAsyncRepository<UserEntity> _userRepository;
     private readonly IAsyncRepository<RolEntity> _rolRepository;
-    private readonly IAsyncRepository<StatusEntity> _statusRepository;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IUploaderRepository _uploaderRepository;
     private readonly IMapper _mapper;
 
-    public UpdateUserCommandHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<StatusEntity> statusRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
+    public UpdateUserCommandHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _rolRepository = rolRepository;
-        _statusRepository = statusRepository;
         _imageRepository = imageRepository;
         _uploaderRepository = uploaderRepository;
     }
@@ -75,20 +73,6 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
                 });
             }
             user.RolId = request.rolId.Value;
-        }
-
-        // update status
-        if (request.statusId is not null && request.statusId != user.StatusId)
-        {
-            var status = await _statusRepository.GetByIdAsync(request.statusId.Value);
-
-            if (status is null)
-            {
-                return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Status not found",}
-                });
-            }
-            user.StatusId = request.statusId.Value;
         }
 
         // update avatar

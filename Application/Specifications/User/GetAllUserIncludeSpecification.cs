@@ -11,6 +11,5 @@ public class GetAllUserByShopIncludeSpecification : Specification<UserEntity>
         Query.Where(x => x.ShopId == shopId);
         Query.Include(x => x.Rol);
         Query.Include(x => x.Avatar);
-        Query.Include(x => x.Status);
     }
 }

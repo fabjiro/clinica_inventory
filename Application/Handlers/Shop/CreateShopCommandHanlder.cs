@@ -4,7 +4,6 @@ using Application.Helpers;
 using Ardalis.Result;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Entities.Attributes;
 using Domain.Entities.Shop;
 using Domain.Interface;
 using Domain.Repository;
@@ -18,13 +17,11 @@ public class CreateShopCommandHanlder : IRequestHandler<CreateShopCommand, Resul
     private readonly IMapper _mapper;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IUploaderRepository _uploaderRepository;
-    private readonly IAsyncRepository<AttributesEntity> _attributeRepository;
     private readonly IAsyncRepository<ShopTypeEntity> _shopTypeRepository;
 
-    public CreateShopCommandHanlder(IAsyncRepository<ShopEntity> shopRepository, IAsyncRepository<AttributesEntity> attributeRepository, IAsyncRepository<ShopTypeEntity> shopTypeRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository, IMapper mapper)
+    public CreateShopCommandHanlder(IAsyncRepository<ShopEntity> shopRepository, IAsyncRepository<ShopTypeEntity> shopTypeRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository, IMapper mapper)
     {
         _shopEntityRepository = shopRepository;
-        _attributeRepository = attributeRepository;
         _shopTypeRepository = shopTypeRepository;
         _imageRepository = imageRepository;
         _uploaderRepository = uploaderRepository;
@@ -42,15 +39,6 @@ public class CreateShopCommandHanlder : IRequestHandler<CreateShopCommand, Resul
             {
                 return Result<ShopResponseDto>.Invalid(new List<ValidationError> {
                     new () {ErrorMessage = "Shop type not found",}
-                });
-            }
-
-            var attribute = await _attributeRepository.GetByIdAsync(request.AttributeId, cancellationToken);
-
-            if (attribute is null)
-            {
-                return Result<ShopResponseDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Attribute not found",}
                 });
             }
 

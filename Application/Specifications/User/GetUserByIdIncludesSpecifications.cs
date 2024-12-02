@@ -10,7 +10,6 @@ public class GetUserByIdIncludesSpecifications : SingleResultSpecification<UserE
         Query.Where(x => x.Id == id);
         Query.Include(x => x.Rol);
         Query.Include(x => x.Avatar);
-        Query.Include(x => x.Status);
         Query.Include(x => x.Shop);
     }
 }

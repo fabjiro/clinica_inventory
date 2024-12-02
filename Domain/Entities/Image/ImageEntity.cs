@@ -15,8 +15,6 @@ public class ImageEntity
     [Required]
     public string CompactUrl { get; set; } = string.Empty;
 
-    public ICollection<ProductEntity> Products { get; set; } = new List<ProductEntity>();
-
     public ImageEntity() { }
 
     public ImageEntity(string originalUrl, string compactUrl)

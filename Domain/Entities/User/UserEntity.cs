@@ -31,13 +31,6 @@ public class UserEntity : BaseEntity
     [ForeignKey("AvatarId")]
     public ImageEntity? Avatar { get; set; }
 
-    [Required]
-    public Guid StatusId { get; set; }
-
-    [Required]
-    [ForeignKey("StatusId")]
-    public StatusEntity? Status { get; set; }
-
     public Guid RolId { get; set; }
 
     [Required]
@@ -45,14 +38,13 @@ public class UserEntity : BaseEntity
     public RolEntity? Rol { get; set; }
 
     public UserEntity() { }
-    public UserEntity(string name, string email, string password, Guid? rolId = null, Guid? statusId = null, Guid? avatarId = null, Guid? shopId = null)
+    public UserEntity(string name, string email, string password, Guid? rolId = null, Guid? avatarId = null, Guid? shopId = null)
     {
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Password = password;
         RolId = rolId ?? Guid.Parse(RolConst.Consultation);
-        StatusId = statusId ?? Guid.Parse(StatusConst.Active);
         AvatarId = avatarId ?? Guid.Parse(DefaulConst.DefaultAvatarUserId);
         ShopId = shopId;
     }

@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.BaseClass;
 using Domain.Const;
-using Domain.Entities.Attributes;
 
 namespace Domain.Entities.Shop;
 
@@ -14,12 +13,6 @@ public class ShopEntity : BaseEntity
 
     [Required]
     public int MinStockProducts { get; set; }
-
-    public Guid AttributeType { get; set; }
-    
-    [ForeignKey("AttributeType")]
-    public AttributesEntity? Attribute { get; set; }
-
     public Guid LogoId { get; set; }
 
     [ForeignKey("LogoId")]
@@ -36,7 +29,6 @@ public class ShopEntity : BaseEntity
         Id = Guid.NewGuid();
         Name = name;
         MinStockProducts = minStockProducts;
-        AttributeType = attributeType;
         LogoId = logoId ?? Guid.Parse(DefaulConst.DefaultImageShop);
         ShopTypeId = shopTypeId;
     }

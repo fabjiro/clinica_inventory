@@ -17,16 +17,14 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
     private readonly IMapper _mapper;
     private readonly string _defaultPassword;
     private readonly IAsyncRepository<RolEntity> _rolRepository;
-    private readonly IAsyncRepository<StatusEntity> _statusRepository;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IUploaderRepository _uploaderRepository;
 
-    public AddUserCommandHandler(IMapper mapper, IConfiguration configuration, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<StatusEntity> statusRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
+    public AddUserCommandHandler(IMapper mapper, IConfiguration configuration, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _rolRepository = rolRepository;
-        _statusRepository = statusRepository;
         _imageRepository = imageRepository;
         _uploaderRepository = uploaderRepository;
         _defaultPassword = configuration["appSettings:DefaulPasswordUser"] ?? "";
@@ -81,19 +79,6 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
 
             }
 
-            if (request.StatusId != null)
-            {
-                var status = await _statusRepository.GetByIdAsync(request.StatusId.Value, cancellationToken);
-
-                if (status is null)
-                {
-                    return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                new () {ErrorMessage = "Status not found",}
-            });
-                }
-
-                userEntity.StatusId = status.Id;
-            }
 
             if (request.Avatar is not null)
             {

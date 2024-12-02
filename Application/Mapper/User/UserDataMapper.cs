@@ -1,6 +1,5 @@
 using Application.Dto.Request.Rol;
 using Application.Dto.Response.Image;
-using Application.Dto.Response.Status;
 using Application.Dto.Response.User;
 using AutoMapper;
 using Domain.Entities;
@@ -16,8 +15,5 @@ public class UserDataMapper : Profile
         CreateMap<RolEntity, RolResDto>();
 
         CreateMap<ImageEntity, ImageResDto>();
-
-        CreateMap<StatusEntity, StatusResDto>();
-
     }
 }
