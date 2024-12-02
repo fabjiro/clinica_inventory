@@ -1,0 +1,5 @@
+services:
+  api:
+    image: "fabjiro/system_inventory"
+    ports:
+      - "10000:8080"
