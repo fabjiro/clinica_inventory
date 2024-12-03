@@ -13,8 +13,7 @@ public class AddPatientReqDto
     [Required(ErrorMessage = "Phone is required")]
     public string Phone { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Address is required")]
-    public string Address { get; set; } = string.Empty;
+    public string? Address { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Age is required")]    
     public int Age { get; set; }
