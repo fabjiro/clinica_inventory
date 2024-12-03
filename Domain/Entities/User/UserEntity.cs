@@ -29,9 +29,7 @@ public class UserEntity : BaseEntity
     [ForeignKey("CivilStatusId")]
     public CivilStatusEntity? CivilStatus { get; set; }
 
-
-    [Required]
-    public string Password { get; set; } = string.Empty;
+    public string? Password { get; set; } = null;
 
     public Guid? ShopId { get; set; } 
 
@@ -52,7 +50,7 @@ public class UserEntity : BaseEntity
     public RolEntity? Rol { get; set; }
 
     public UserEntity() { }
-    public UserEntity(string name, string email, string password, Guid? rolId = null, Guid? avatarId = null, Guid? shopId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null)
+    public UserEntity(string name, string? password = null,string? email = null, Guid? rolId = null, Guid? avatarId = null, Guid? shopId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -69,6 +67,6 @@ public class UserEntity : BaseEntity
         Age = age;
         ContactPerson = contactPerson;
         ContactPhone = contactPhone;
-        Birthday = birthday;
+        Birthday =  DateTime.SpecifyKind(birthday ?? DateTime.UtcNow, DateTimeKind.Utc);
     }
 }

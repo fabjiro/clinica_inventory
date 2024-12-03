@@ -19,6 +19,41 @@ public class UserController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpPost("patient")]
+    [Authorize(Policy = "AdminOrReception")]
+    public async Task<IActionResult> CreatePatient([FromBody] AddPatientReqDto dto)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var command = new AddPatientCommand(
+                userId!,
+                dto.Name,
+                dto.Identification,
+                dto.Phone,
+                dto.Address,
+                dto.ContactPerson,
+                dto.ContactPhone,
+                dto.Age,
+                (DateTime)dto.Birthday!,
+                Guid.Parse(dto.TypeSex),
+                Guid.Parse(dto.CivilStatus),
+                Avatar: dto.Avatar
+            );
+            var result = await _mediator.Send(command);
+            if (result.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
+
     [HttpGet]
     [Authorize(Policy = "Admin")]
     public async Task<IActionResult> GetAll()
@@ -34,7 +69,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Update([FromBody] UserUpdateReqDto dto)
     {
         var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-        var commands = new UpdateUserCommand(userId!,Guid.Parse(dto.Id), dto.Name, dto.Password, dto.Rol, dto.Status, dto.Avatar);
+        var commands = new UpdateUserCommand(userId!, Guid.Parse(dto.Id), dto.Name, dto.Password, dto.Rol, dto.Status, dto.Avatar);
         var result = await _mediator.Send(commands);
         if (result.IsInvalid())
         {
@@ -68,7 +103,7 @@ public class UserController : ControllerBase
     {
         var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         var result = await _mediator.Send(new DeleteUserCommand(userId!, id));
-        
+
         if (result.IsInvalid())
         {
             var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
