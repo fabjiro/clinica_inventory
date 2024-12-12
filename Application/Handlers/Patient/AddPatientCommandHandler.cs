@@ -1,8 +1,8 @@
-using Application.Commands.User;
+using Application.Commands.Patient;
+using Application.Dto.Response.Patient;
 using Application.Dto.Response.User;
 using Application.Helpers;
 using Application.Specifications.Patient;
-using Application.Specifications.User;
 using Ardalis.Result;
 using AutoMapper;
 using Domain.Const;
@@ -13,7 +13,7 @@ using MediatR;
 
 namespace Application.Handlers.Patient;
 
-public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Result<UserBasicResDto>>
+public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Result<PatientResDto>>
 {
     private readonly IAsyncRepository<PatientEntity> _userRepository;
     private readonly IUploaderRepository _uploaderRepository;
@@ -26,7 +26,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
         _uploaderRepository = uploaderRepository;
         _mapper = mapper;
     }
-    public async Task<Result<UserBasicResDto>> Handle(AddPatientCommand request, CancellationToken cancellationToken)
+    public async Task<Result<PatientResDto>> Handle(AddPatientCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -35,7 +35,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
 
             if (isUserExit is not null)
             {
-                return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
+                return Result<PatientResDto>.Invalid(new List<ValidationError> {
                     new () {ErrorMessage = "User already exists",}
                 });
             }
@@ -62,7 +62,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
 
                 if (image is null)
                 {
-                    return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
+                    return Result<PatientResDto>.Invalid(new List<ValidationError> {
                         new () {ErrorMessage = "Image not uploaded",}
                     });
                 }
@@ -76,9 +76,11 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
                 userEntity.AvatarId = newImage.Id;
             }
 
+            userEntity.SetCreationInfo(request.UserId);
+
             var newUser = await _userRepository.AddAsync(userEntity, cancellationToken);
 
-            return Result.Success(_mapper.Map<UserBasicResDto>(newUser));
+            return Result.Success(_mapper.Map<PatientResDto>(newUser));
 
         }
         catch (Exception ex)

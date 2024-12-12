@@ -1,5 +1,4 @@
 using Application.Helpers;
-using Application.Commands.User;
 using Application.Dto.Request.User;
 using Application.Queries.User;
 using Ardalis.Result;
@@ -35,39 +34,6 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPost("patient")]
-    [Authorize(Policy = "AdminOrReception")]
-    public async Task<IActionResult> CreatePatient([FromBody] AddPatientReqDto dto)
-    {
-        try
-        {
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            var command = new AddPatientCommand(
-                dto.Name,
-                dto.Identification,
-                dto.Phone,
-                dto.Address,
-                dto.ContactPerson,
-                dto.ContactPhone,
-                dto.Age,
-                (DateTime)dto.Birthday!,
-                Guid.Parse(dto.TypeSex),
-                Guid.Parse(dto.CivilStatus),
-                Avatar: dto.Avatar
-            );
-            var result = await _mediator.Send(command);
-            if (result.IsInvalid())
-            {
-                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
-                return Problem(invalidError, null, 400);
-            }
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            return Problem(ErrorHelper.GetExceptionError(ex));
-        }
-    }
 
     // [HttpGet]
     // [Authorize(Policy = "Admin")]
