@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Application.Commands.User;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -18,32 +19,15 @@ public class UserController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("patient")]
-    [Authorize(Policy = "AdminOrReception")]
-    public async Task<IActionResult> GetAllPatient()
+    [HttpGet]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> GetAll()
     {
-        try
-        {
-            var command = new GetAllPatientsQuery();
-            var result = await _mediator.Send(command);
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
-        {
-            return Problem(ErrorHelper.GetExceptionError(ex));
-        }
+        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        var category = await _mediator.Send(new GetAllUserQuery(userId!));
+        return Ok(category.Value);
     }
-
-
-    // [HttpGet]
-    // [Authorize(Policy = "Admin")]
-    // public async Task<IActionResult> GetAll()
-    // {
-    //     var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-    //     var category = await _mediator.Send(new GetAllUserQuery(userId!));
-    //     return Ok(category.Value);
-    // }
 
     // [HttpPut]
     // [Authorize(Policy = "Admin")]
@@ -78,19 +62,19 @@ public class UserController : ControllerBase
     //     return Ok(result.Value);
     // }
 
-    // [HttpDelete("{id}")]
-    // [Authorize(Policy = "Admin")]
-    // public async Task<IActionResult> Delete(Guid id)
-    // {
-    //     var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-    //     var result = await _mediator.Send(new DeleteUserCommand(userId!, id));
+    [HttpDelete("{id}")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var result = await _mediator.Send(new DeleteUserCommand(userId!, id));
 
-    //     if (result.IsInvalid())
-    //     {
-    //         var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
-    //         return Problem(invalidError, null, 400);
-    //     }
-    //     return Ok(result.Value);
-    // }
+        if (result.IsInvalid())
+        {
+            var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+            return Problem(invalidError, null, 400);
+        }
+        return Ok(result.Value);
+    }
 
 }
