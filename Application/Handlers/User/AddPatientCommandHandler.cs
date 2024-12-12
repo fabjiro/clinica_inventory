@@ -29,14 +29,6 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
     {
         try
         {
-            var userCreator = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
-
-            if (userCreator is null || userCreator.ShopId is null)
-            {
-                return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Shop not found",}
-                });
-            }
 
             var isUserExit = await _userRepository.FirstOrDefaultAsync(new GetUserByIdentification(request.Identification), cancellationToken);
 
@@ -59,7 +51,6 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
                 contactPerson: request.ContactPerson,
                 contactPhone: request.ContactPhone,
                 birthday: request.Birthday,
-                shopId: (Guid)userCreator.ShopId,
                 avatarId: Guid.Parse(DefaulConst.DefaultAvatarUserId)
             );
 
@@ -83,8 +74,6 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
 
                 userEntity.AvatarId = newImage.Id;
             }
-
-            userEntity.SetCreationInfo(userCreator.Id.ToString());
 
             var newUser = await _userRepository.AddAsync(userEntity, cancellationToken);
 

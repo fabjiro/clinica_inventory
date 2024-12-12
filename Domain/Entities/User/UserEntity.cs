@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Domain.BaseClass;
 using Domain.Const;
-using Domain.Entities.Shop;
 
 namespace Domain.Entities;
 
@@ -31,11 +30,6 @@ public class UserEntity : BaseEntity
 
     public string? Password { get; set; } = null;
 
-    public Guid? ShopId { get; set; } 
-
-    [ForeignKey("ShopId")]
-    public ShopEntity? Shop { get; set; }
-
     [Required]
     public Guid AvatarId { get; set; }
 
@@ -50,7 +44,7 @@ public class UserEntity : BaseEntity
     public RolEntity? Rol { get; set; }
 
     public UserEntity() { }
-    public UserEntity(string name, string? password = null,string? email = null, Guid? rolId = null, Guid? avatarId = null, Guid? shopId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null)
+    public UserEntity(string name, string? password = null,string? email = null, Guid? rolId = null, Guid? avatarId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -58,7 +52,6 @@ public class UserEntity : BaseEntity
         Password = password;
         RolId = rolId ?? Guid.Parse(RolConst.Consultation);
         AvatarId = avatarId ?? Guid.Parse(DefaulConst.DefaultAvatarUserId);
-        ShopId = shopId;
         CivilStatusId = civilStatusId;
         TypeSex = typeSex;
         Identification = identification;

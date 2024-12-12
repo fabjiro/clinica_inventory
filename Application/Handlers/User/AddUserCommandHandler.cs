@@ -36,18 +36,9 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
 
         try
         {
-            var userCreator = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
 
-            if (userCreator is null || userCreator.ShopId is null)
-            {
-                return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Shop not found",}
-                });
-            }
-
-            var userByEmail = await _userRepository.FirstOrDefaultAsync(new GetUserByEmailAndShopSpecifications(
-                request.Email,
-                (Guid)userCreator.ShopId
+            var userByEmail = await _userRepository.FirstOrDefaultAsync(new GetUserByEmailSpecifications(
+                request.Email
             ), cancellationToken);
 
             if (userByEmail != null)
@@ -60,8 +51,7 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
             var userEntity = new UserEntity(
                 request.Name,
                 request.Email,
-                PasswordHelper.HashPassword(_defaultPassword),
-                shopId: (Guid)userCreator.ShopId
+                PasswordHelper.HashPassword(_defaultPassword)
             );
 
             if (request.RolId != null)

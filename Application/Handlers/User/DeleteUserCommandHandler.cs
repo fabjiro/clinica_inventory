@@ -30,19 +30,8 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Resul
     {
         try
         {
-            var userDeleter = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
 
-            if (userDeleter is null || userDeleter.ShopId is null)
-            {
-                return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Shop not found",}
-                });
-            }
-
-            var userEntity = await _userRepository.FirstOrDefaultAsync(new GetUserByIdAndShopSpecifications(
-                request.Id,
-                (Guid)userDeleter.ShopId
-            ), cancellationToken);
+            var userEntity = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (userEntity is null)
             {

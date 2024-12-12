@@ -30,16 +30,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
 
     public async Task<Result<UserBasicResDto>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        var userUpdater = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
-
-        if (userUpdater is null || userUpdater.ShopId is null)
-        {
-            return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                new () {ErrorMessage = "Shop not found",}
-            });
-        }
-
-        var user = await _userRepository.FirstOrDefaultAsync(new GetUserByIdAndShopSpecifications(request.id, (Guid)userUpdater.ShopId), cancellationToken);
+        var user = await _userRepository.GetByIdAsync(request.id, cancellationToken);
 
         if (user is null)
         {
