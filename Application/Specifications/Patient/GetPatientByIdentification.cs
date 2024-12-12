@@ -7,6 +7,7 @@ public class GetPatientByIdentification : SingleResultSpecification<PatientEntit
 {
     public GetPatientByIdentification(string identification)
     {
+        Query.Where(x => x.IsDeleted == false);
         Query.Where(x => x.Identification == identification);
     }
 }
