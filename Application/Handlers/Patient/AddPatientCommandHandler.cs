@@ -1,6 +1,7 @@
 using Application.Commands.User;
 using Application.Dto.Response.User;
 using Application.Helpers;
+using Application.Specifications.Patient;
 using Application.Specifications.User;
 using Ardalis.Result;
 using AutoMapper;
@@ -10,15 +11,15 @@ using Domain.Interface;
 using Domain.Repository;
 using MediatR;
 
-namespace Application.Handlers.User;
+namespace Application.Handlers.Patient;
 
 public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Result<UserBasicResDto>>
 {
-    private readonly IAsyncRepository<UserEntity> _userRepository;
+    private readonly IAsyncRepository<PatientEntity> _userRepository;
     private readonly IUploaderRepository _uploaderRepository;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IMapper _mapper;
-    public AddPatientCommandHandler(IAsyncRepository<UserEntity> userRepository, IMapper mapper, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
+    public AddPatientCommandHandler(IAsyncRepository<PatientEntity> userRepository, IMapper mapper, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
     {
         _userRepository = userRepository;
         _imageRepository = imageRepository;
@@ -30,7 +31,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
         try
         {
 
-            var isUserExit = await _userRepository.FirstOrDefaultAsync(new GetUserByIdentification(request.Identification), cancellationToken);
+            var isUserExit = await _userRepository.FirstOrDefaultAsync(new GetPatientByIdentification(request.Identification), cancellationToken);
 
             if (isUserExit is not null)
             {
@@ -39,7 +40,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
                 });
             }
 
-            var userEntity = new UserEntity(
+            var userEntity = new PatientEntity(
                 request.Name,
                 rolId: Guid.Parse(RolConst.Consultation),
                 civilStatusId: request.CivilStatus,

@@ -5,11 +5,10 @@ using MediatR;
 namespace Application.Commands.User;
 
 public record AddPatientCommand(
-    string UserId,
     string Name,
     string Identification,
     string Phone,
-    string Address,
+    string? Address,
     string ContactPerson,
     string ContactPhone,
     int Age,

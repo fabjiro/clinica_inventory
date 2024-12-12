@@ -43,7 +43,6 @@ public class UserController : ControllerBase
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var command = new AddPatientCommand(
-                userId!,
                 dto.Name,
                 dto.Identification,
                 dto.Phone,

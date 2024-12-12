@@ -37,8 +37,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Result<A
             request.fullname,
             request.email,
             hashedPassword,
-            Guid.Parse(RolConst.Consultation),
-            null,
+            rolId:Guid.Parse(RolConst.Consultation),
             null
         );
 
