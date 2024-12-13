@@ -9,6 +9,5 @@ public class UserUpdateReqDto
     public string? Name { get; set; }
     public string? Password { get; set; }
     public Guid? Rol { get; set; }
-    public Guid? Status { get; set; }
     public string? Avatar { get; set; }
 }

@@ -5,4 +5,4 @@ using MediatR;
 namespace Application.Commands.User;
        
 
-public record AddUserCommand(string UserId, string Name, string Email, string? Password, Guid? RolId, Guid? StatusId, string? Avatar) : IRequest<Result<UserBasicResDto>>;
+public record AddUserCommand(string UserId, string Name, string Email, string? Password, Guid? RolId, string? Avatar) : IRequest<Result<UserBasicResDto>>;

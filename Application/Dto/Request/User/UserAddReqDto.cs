@@ -10,7 +10,6 @@ public class UserAddReqDto
     public string Email { get; set; } = string.Empty;
     public string? Password { get; set; }
     public string? Rol { get; set; }
-    public string? Status { get; set; }
     public string? Avatar { get; set; }
 
 }

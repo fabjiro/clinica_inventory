@@ -20,6 +20,21 @@ public static class DependencyInjection
         var cs = configuration.GetConnectionString("Default");
         services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(cs));
 
+         using (var serviceProvider = services.BuildServiceProvider())
+        {
+            try
+            {
+                var dbContext = serviceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.OpenConnection(); // Abre la conexión
+                dbContext.Database.CloseConnection(); // Cierra la conexión
+                Console.WriteLine("Conexión a la base de datos inicializada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al conectar a la base de datos: {ex.Message}");
+            }
+        }
+
         // Repositories
         // services.AddScoped<typeof(IAsyncRepository<>), typeof(AsyncRepository<>)>();
         services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));

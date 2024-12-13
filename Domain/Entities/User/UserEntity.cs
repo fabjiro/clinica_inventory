@@ -32,7 +32,7 @@ public class UserEntity : BaseEntity
     public RolEntity? Rol { get; set; }
 
     public UserEntity() { }
-    public UserEntity(string name, string password ,string email , Guid? rolId = null, Guid? avatarId = null)
+    public UserEntity(string name,string email, string password  , Guid? rolId = null, Guid? avatarId = null)
     {
         Id = Guid.NewGuid();
         Name = name;
