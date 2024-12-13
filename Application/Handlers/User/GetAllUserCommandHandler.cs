@@ -23,7 +23,8 @@ public class GetAllUserCommandHandler : IRequestHandler<GetAllUserQuery, Result<
     public async Task<Result<List<UserBasicResDto>>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
     {
 
-        var users = await _repository.ListAsync(cancellationToken);
-        return Result.Success(users.Select(_mapper.Map<UserBasicResDto>).ToList());
+        var users = await _repository.ListAsync(new GetAllUserIncludeSpecification(), cancellationToken);
+
+        return Result.Success(_mapper.Map<List<UserBasicResDto>>(users));
     }
 }

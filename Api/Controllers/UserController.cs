@@ -45,22 +45,22 @@ public class UserController : ControllerBase
     //     return Ok(result.Value);
     // }
 
-    // [HttpPost("add")]
-    // [Authorize(Policy = "Admin")]
-    // public async Task<IActionResult> Add([FromBody] UserAddReqDto dto)
-    // {
-    //     var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-    //     var commands = new AddUserCommand(userId!, dto.Name, dto.Email, dto.Password, (dto.Rol != null ? Guid.Parse(dto.Rol) : null), (dto.Status != null ? Guid.Parse(dto.Status) : null), dto.Avatar);
-    //     var result = await _mediator.Send(commands);
+    [HttpPost("add")]
+    [Authorize(Policy = "Admin")]
+    public async Task<IActionResult> Add([FromBody] UserAddReqDto dto)
+    {
+        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var commands = new AddUserCommand(userId!, dto.Name, dto.Email, dto.Password, (dto.Rol != null ? Guid.Parse(dto.Rol) : null), (dto.Status != null ? Guid.Parse(dto.Status) : null), dto.Avatar);
+        var result = await _mediator.Send(commands);
 
-    //     if (result.IsInvalid())
-    //     {
-    //         var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
-    //         return Problem(invalidError, null, 400);
-    //     }
+        if (result.IsInvalid())
+        {
+            var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+            return Problem(invalidError, null, 400);
+        }
 
-    //     return Ok(result.Value);
-    // }
+        return Ok(result.Value);
+    }
 
     [HttpDelete("{id}")]
     [Authorize(Policy = "Admin")]

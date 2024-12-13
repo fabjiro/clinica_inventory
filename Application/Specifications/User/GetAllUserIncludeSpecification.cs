@@ -3,11 +3,11 @@ using Domain.Entities;
 
 namespace Application.Specifications.User;
 
-public class GetAllUserByShopIncludeSpecification : Specification<UserEntity>
+public class GetAllUserIncludeSpecification : Specification<UserEntity>
 {
-    public GetAllUserByShopIncludeSpecification(Guid shopId)
+    public GetAllUserIncludeSpecification()
     {
-        Query.Where(emp => emp.IsDeleted == false);
+        Query.Where(x => !x.IsDeleted);
         Query.Include(x => x.Rol);
         Query.Include(x => x.Avatar);
     }
