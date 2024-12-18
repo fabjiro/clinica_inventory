@@ -1,6 +1,5 @@
 using Application.Commands.Patient;
 using Application.Dto.Response.Patient;
-using Application.Dto.Response.User;
 using Application.Helpers;
 using Application.Specifications.Patient;
 using Ardalis.Result;
@@ -44,7 +43,7 @@ public class AddPatientCommandHandler : IRequestHandler<AddPatientCommand, Resul
                 request.Name,
                 rolId: Guid.Parse(RolConst.Consultation),
                 civilStatusId: request.CivilStatus,
-                typeSex: Guid.Parse(TypeSexConst.Female),
+                typeSex: request.TypeSex,
                 identification: request.Identification,
                 phone: request.Phone,
                 address: request.Address,
