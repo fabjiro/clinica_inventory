@@ -15,6 +15,7 @@ public class PatientResDto
     public string? Address { get; set; } = null;
     public int? Age { get; set; } = null;
     public string? ContactPhone { get; set; } = null;
+    public DateTime? CreatedAt { get; set; } = null;
     public DateTime? Birthday { get; set; } = null;
     public Guid? TypeSex { get; set; } = null;
     public CivilStatusResDto? CivilStatus { get; set; }
