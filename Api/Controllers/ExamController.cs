@@ -49,4 +49,27 @@ public class ExamController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpPut]
+    [Authorize]
+    public async Task<ActionResult<ExamDto>> Update([FromBody] UpdateExamDtoReq dto)
+    {
+        try
+        {
+            var command = new UpdateExamCommand(Guid.Parse(dto.Id), Name: dto.Name, Group: string.IsNullOrWhiteSpace(dto.Group) ? null : Guid.Parse(dto.Group));
+            var exam = await _mediator.Send(command);
+
+            if (exam.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(exam.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+
+            return Ok(exam.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
