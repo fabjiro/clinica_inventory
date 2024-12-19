@@ -10,5 +10,6 @@ public class IncludeExamSpecification : Specification<ExamEntity>
     public IncludeExamSpecification()
     {
         Query.Include(x => x.Group);
+        Query.Where(x => x.IsDeleted == false);
     }
 }

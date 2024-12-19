@@ -72,4 +72,27 @@ public class ExamController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<Guid>> Delete(Guid id)
+    {
+        try
+        {
+            var command = new DeleteExamCommand(id);
+            var exam = await _mediator.Send(command);
+
+            if (exam.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(exam.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+
+            return Ok(exam.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }

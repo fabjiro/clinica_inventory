@@ -1,13 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.BaseClass;
 
 namespace Domain.Entities;
 
 [Table("exam")]
-public class ExamEntity
+public class ExamEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-
     [Required]
     public string Name { get; set; } = string.Empty;
 
