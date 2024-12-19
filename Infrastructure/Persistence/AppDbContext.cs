@@ -18,6 +18,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<BackupEntity> BackupEntity { get; set; }
     public virtual DbSet<CivilStatusEntity> CivilStatusEntities { get; set; }
     public virtual DbSet<PatientEntity> PatientEntity { get; set; }
+    public virtual DbSet<GroupEntity> GroupEntity { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:Default", b => b.MigrationsAssembly("Infrastructure"));
