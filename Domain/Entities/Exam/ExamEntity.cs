@@ -3,19 +3,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-[Table("group")]
-public class GroupEntity
+[Table("exam")]
+public class ExamEntity
 {
     public Guid Id { get; set; }
-    
+
     [Required]
     public string Name { get; set; } = string.Empty;
 
-    public GroupEntity() {}
+    [Required]
+    public Guid GroupId { get; set; }
 
-    public GroupEntity(string name)
+    [ForeignKey("GroupId")]
+    public GroupEntity? Group { get; set; } = null;
+
+    public ExamEntity() {}
+
+    public ExamEntity(string name, Guid groupId)
     {
         Id = Guid.NewGuid();
         Name = name;
+        GroupId = groupId;
     }
 }
