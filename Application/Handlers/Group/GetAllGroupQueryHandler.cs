@@ -1,5 +1,6 @@
 using Application.Dto.Response.Group;
 using Application.Queries.Group;
+using Application.Specifications.Exam;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interface;

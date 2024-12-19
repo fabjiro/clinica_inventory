@@ -1,5 +1,6 @@
 using Application.Dto.Response.Exam;
 using Application.Queries.Exam;
+using Application.Specifications.Exam;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interface;
@@ -20,7 +21,7 @@ namespace Application.Handlers.Exam
 
         public async Task<List<ExamDto>> Handle(GetAllExamQuery request, CancellationToken cancellationToken)
         {
-            var exams = await _examRepository.ListAsync(cancellationToken);
+            var exams = await _examRepository.ListAsync(new IncludeExamSpecification(), cancellationToken);
             return _mapper.Map<List<ExamDto>>(exams);
         }
     }
