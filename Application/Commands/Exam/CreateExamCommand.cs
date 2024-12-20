@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Commands.Exam;
 
-public record CreateExamCommand(string Name, Guid GroupId) : IRequest<Result<ExamDto>> { }
+public record CreateExamCommand(string UserId, string Name, Guid GroupId) : IRequest<Result<ExamDto>> { }

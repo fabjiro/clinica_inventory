@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Application.Commands.Exam;
 using Application.Dto.Request.Exam;
 using Application.Dto.Response.Exam;
@@ -33,7 +34,8 @@ public class ExamController : ControllerBase
     {
         try
         {
-            var command = new CreateExamCommand(dto.Name, Guid.Parse(dto.Group));
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var command = new CreateExamCommand(userId!, dto.Name, Guid.Parse(dto.Group));
             var exam = await _mediator.Send(command);
 
             if (exam.IsInvalid())

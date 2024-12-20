@@ -38,6 +38,8 @@ public class CreateExamCommandHandler : IRequestHandler<CreateExamCommand, Resul
             Group = group
         };
 
+        exam.SetCreationInfo(request.UserId);
+
         await _examRepository.AddAsync(exam, cancellationToken);
 
         return Result.Success(_mapper.Map<ExamDto>(exam));
