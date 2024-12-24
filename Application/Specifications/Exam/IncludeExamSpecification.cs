@@ -11,5 +11,7 @@ public class IncludeExamSpecification : Specification<ExamEntity>
     {
         Query.Include(x => x.Group);
         Query.Where(x => x.IsDeleted == false);
+        
+        Query.OrderByDescending(x => x.CreatedAt);
     }
 }
