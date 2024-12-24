@@ -15,19 +15,17 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
 {
     private readonly IAsyncRepository<UserEntity> _userRepository;
     private readonly IMapper _mapper;
-    private readonly string _defaultPassword;
     private readonly IAsyncRepository<RolEntity> _rolRepository;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IUploaderRepository _uploaderRepository;
 
-    public AddUserCommandHandler(IMapper mapper, IConfiguration configuration, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
+    public AddUserCommandHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
     {
         _userRepository = userRepository;
         _mapper = mapper;
         _rolRepository = rolRepository;
         _imageRepository = imageRepository;
         _uploaderRepository = uploaderRepository;
-        _defaultPassword = configuration["appSettings:DefaulPasswordUser"] ?? "";
     }
 
 
@@ -51,7 +49,7 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
             var userEntity = new UserEntity(
                 request.Name,
                 request.Email,
-                PasswordHelper.HashPassword(_defaultPassword)
+                PasswordHelper.HashPassword(request.Password!)
             );
 
             if (request.RolId != null)
