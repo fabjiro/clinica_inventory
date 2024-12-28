@@ -32,7 +32,7 @@ public class ConsultController : ControllerBase
                 dto.AntecedentPerson,
                 dto.Diagnostic,
                 dto.Recipe,
-                DateTime.Parse(dto.Nextappointment).ToLocalTime(),
+                DateTime.Parse(dto.Nextappointment).ToUniversalTime(),
                 dto.Weight,
                 dto.Size,
                 AntecedentFamily: dto.AntecedentFamily,
