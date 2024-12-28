@@ -55,4 +55,57 @@ public class ConsultEntity : BaseEntity
 
     [Required]
     public string Nextappointment { get; set; } = string.Empty;
+
+    [Required]
+    public int Count { get; set; }
+
+    public ConsultEntity() { }
+
+    public ConsultEntity(
+        Guid patientId,
+        string motive,
+        decimal weight,
+        decimal size,
+        string antecedentPersonal,
+        string diagnosis,
+        string recipe,
+        string nextappointment,
+        int count,
+        string? clinicalhistory = null,
+        string? bilogicalEvaluation = null,
+        string? psychologicalEvaluation = null,
+        string? socialEvaluation = null,
+        string? functionalEvaluation = null,
+        decimal? pulse = null,
+        decimal? oxygenSaturation = null,
+        decimal? systolicPressure = null,
+        decimal? diastolicPressure = null,
+        string? antecedentFamily = null,
+        Guid? examComplementaryId = null,
+        Guid? imageExamId = null
+    )
+    {
+        Id = Guid.NewGuid();
+        PatientId = patientId;
+        Motive = motive;
+        Clinicalhistory = clinicalhistory;
+        BilogicalEvaluation = bilogicalEvaluation;
+        PsychologicalEvaluation = psychologicalEvaluation;
+        SocialEvaluation = socialEvaluation;
+        FunctionalEvaluation = functionalEvaluation;
+        Weight = weight;
+        Size = size;
+        Pulse = pulse;
+        OxygenSaturation = oxygenSaturation;
+        SystolicPressure = systolicPressure;
+        DiastolicPressure = diastolicPressure;
+        AntecedentPersonal = antecedentPersonal;
+        AntecedentFamily = antecedentFamily;
+        Diagnosis = diagnosis;
+        Recipe = recipe;
+        Nextappointment = nextappointment;
+        Count = count;
+        ExamComplementaryId = examComplementaryId;
+        ImageExamId = imageExamId;
+    }
 }
