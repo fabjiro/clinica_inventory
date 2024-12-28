@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241228014736_ConsultEntity")]
+    [Migration("20241228024951_ConsultEntity")]
     partial class ConsultEntity
     {
         /// <inheritdoc />
@@ -43,6 +43,9 @@ namespace Infrastructure.Persistence.migrations
 
                     b.Property<string>("Clinicalhistory")
                         .HasColumnType("text");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -80,9 +83,9 @@ namespace Infrastructure.Persistence.migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Nextappointment")
+                    b.Property<DateTime?>("Nextappointment")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal?>("OxygenSaturation")
                         .HasColumnType("numeric");

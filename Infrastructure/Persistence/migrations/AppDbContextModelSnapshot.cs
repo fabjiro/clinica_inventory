@@ -80,9 +80,9 @@ namespace Infrastructure.Persistence.migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Nextappointment")
+                    b.Property<DateTime?>("Nextappointment")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal?>("OxygenSaturation")
                         .HasColumnType("numeric");

@@ -33,7 +33,7 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
     {
         try
         {
-            var userEntity = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            var userEntity = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
 
             if (userEntity is null)
             {
@@ -70,9 +70,9 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
                 request.Weight,
                 request.Size,
                 request.AntecedentPersonal,
-                request.Diagnosis,
+                request.Diagnostic,
                 request.Recipe,
-                request.Nextappointment,
+                DateTime.UtcNow,
                 0,
                 clinicalhistory: request.Clinicalhistory,
                 bilogicalEvaluation: request.BilogicalEvaluation,
