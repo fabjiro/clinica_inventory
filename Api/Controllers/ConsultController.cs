@@ -78,4 +78,31 @@ public class ConsultController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteById(Guid id)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            
+            var result = await _mediator.Send(new DeleteConsultCommand(
+                userId!,
+                id
+            ));
+
+            if(result.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
