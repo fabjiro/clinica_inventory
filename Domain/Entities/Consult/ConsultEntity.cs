@@ -61,9 +61,6 @@ public class ConsultEntity : BaseEntity
     public DateTime? Nextappointment { get; set; }
     
 
-    [Required]
-    public int Count { get; set; }
-
     public ConsultEntity() { }
 
     public ConsultEntity(
@@ -75,7 +72,6 @@ public class ConsultEntity : BaseEntity
         string diagnosis,
         string recipe,
         DateTime nextappointment,
-        int count,
         string? clinicalhistory = null,
         string? bilogicalEvaluation = null,
         string? psychologicalEvaluation = null,
@@ -109,7 +105,6 @@ public class ConsultEntity : BaseEntity
         Diagnosis = diagnosis;
         Recipe = recipe;
         Nextappointment = nextappointment;
-        Count = count;
         ExamComplementaryId = examComplementaryId;
         ImageExamId = imageExamId;
     }

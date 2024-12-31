@@ -73,7 +73,6 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
                 request.Diagnostic,
                 request.Recipe,
                 request.Nextappointment,
-                0,
                 clinicalhistory: request.Clinicalhistory,
                 bilogicalEvaluation: request.BilogicalEvaluation,
                 psychologicalEvaluation: request.PsychologicalEvaluation,
