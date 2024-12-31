@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Application.Commands.Consult;
 using Application.Dto.Request.Consult;
 using Application.Helpers;
+using Application.Queries.Consult;
 using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -55,6 +56,21 @@ public class ConsultController : ControllerBase
                 return Problem(invalidError, null, 400);
             }
 
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> Get()
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetAllConsultQuery());
             return Ok(result.Value);
         }
         catch (Exception ex)
