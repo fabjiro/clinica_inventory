@@ -105,4 +105,50 @@ public class ConsultController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> Update([FromBody] UpdateConsultDtoReq dto)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var command = new UpdateConsultCommand(
+                Guid.Parse(dto.Id),
+                UserId: userId!,
+                Motive: dto.Motive,
+                AntecedentPersonal:dto.AntecedentPerson,
+                 Diagnostic: dto.Diagnostic,
+                 Recipe: dto.Recipe,
+                 Weight: dto.Weight,
+                Size: dto.Size,
+                AntecedentFamily: dto.AntecedentFamily,
+                Clinicalhistory: dto.Clinicalhistory,
+                BilogicalEvaluation: dto.BilogicalEvaluation,
+                PsychologicalEvaluation: dto.PsychologicalEvaluation,
+                SocialEvaluation: dto.SocialEvaluation,
+                FunctionalEvaluation: dto.FunctionalEvaluation,
+                Pulse: dto.Pulse,
+                OxygenSaturation: dto.OxygenSaturation,
+                SystolicPressure: dto.SystolicPressure,
+                DiastolicPressure: dto.DiastolicPressure,
+                ExamComplementaryId: dto.ExamComplementary != null ? Guid.Parse(dto.ExamComplementary) : null,
+                ImageExam: dto.ImageExam,
+                Nextappointment: dto.Nextappointment != null? DateTime.Parse( dto.Nextappointment) : null
+            );
+            var result = await _mediator.Send(command);
+
+            if (result.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
