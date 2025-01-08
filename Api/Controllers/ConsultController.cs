@@ -79,6 +79,24 @@ public class ConsultController : ControllerBase
         }
     }
 
+    [HttpGet("{patientId}")]
+    [Authorize]
+    public async Task<IActionResult> GetByPatient(Guid patientId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetConsultByPatientIdQuery(
+                patientId
+            ));
+
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
+
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<IActionResult> DeleteById(Guid id)
