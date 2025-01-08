@@ -109,6 +109,9 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
 
             await _consultRepository.AddAsync(consultEntity, cancellationToken);
 
+            patientEntity.ConsultCount += 1;
+            await _patientRepository.UpdateAsync(patientEntity, cancellationToken);
+
             var consultDtoRes = _mapper.Map<ConsultDtoRes>(consultEntity);
 
             return Result.Success(consultDtoRes);
