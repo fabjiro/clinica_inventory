@@ -15,6 +15,7 @@ public class PatientEntity : BaseEntity
     public string? Phone { get; set; } = null;
     public string? Address { get; set; } = null;
     public int? Age { get; set; } = null;
+    public int ConsultCount { get; set; } = 0;
     public string? ContactPerson { get; set; } = null;
     public string? ContactPhone { get; set; } = null;
     public DateTime? Birthday { get; set; } = null;
@@ -40,7 +41,7 @@ public class PatientEntity : BaseEntity
 
     public PatientEntity() { }
 
-    public PatientEntity(string name, Guid? rolId = null, Guid? avatarId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null)
+    public PatientEntity(string name, Guid? rolId = null, Guid? avatarId = null, Guid? civilStatusId = null, Guid? typeSex = null, string? identification = null, string? phone = null, string? address = null, int? age = null, string? contactPerson = null, string? contactPhone = null, DateTime? birthday = null, int consultCount = 0)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -55,5 +56,6 @@ public class PatientEntity : BaseEntity
         ContactPerson = contactPerson;
         ContactPhone = contactPhone;
         Birthday = DateTime.SpecifyKind(birthday ?? DateTime.UtcNow, DateTimeKind.Utc);
+        ConsultCount = consultCount;
     }
 }
