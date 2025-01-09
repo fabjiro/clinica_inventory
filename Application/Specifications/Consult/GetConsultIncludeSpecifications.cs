@@ -18,7 +18,9 @@ public class GetConsultIncludeSpecifications : Specification<ConsultEntity>
         Query.Include(x => x.ComplementaryTest);
         Query.Include(x => x.Image);
         
-        Query.Include(x => x.UserCreatedBy);
+            Query.Include(x => x.UserCreatedBy);
+            Query.Include(x => x.UserCreatedBy!.Avatar);
+            Query.Include(x => x.UserCreatedBy!.Rol);
 
         Query.Where(x => x.IsDeleted == false);
     }
