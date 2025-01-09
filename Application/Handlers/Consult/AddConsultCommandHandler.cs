@@ -106,6 +106,7 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
             }
 
             consultEntity.SetCreationInfo(request.UserId);
+            consultEntity.CreatedByGuid = Guid.Parse(request.UserId);
 
             await _consultRepository.AddAsync(consultEntity, cancellationToken);
 

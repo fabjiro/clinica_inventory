@@ -12,6 +12,14 @@ public class ConsultEntity : BaseEntity
     [ForeignKey("PatientId")]
     public PatientEntity? Patient { get; set; }
 
+    public Guid? CreatedByGuid
+    {
+        get;
+        set;
+    }
+
+    [ForeignKey("CreatedByGuid")]
+    public UserEntity? UserCreatedBy { get; set; }
 
     [Required]
     public string Motive { get; set; } = string.Empty;
@@ -59,7 +67,7 @@ public class ConsultEntity : BaseEntity
 
     [Required]
     public DateTime? Nextappointment { get; set; }
-    
+
 
     public ConsultEntity() { }
 

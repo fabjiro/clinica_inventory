@@ -17,6 +17,8 @@ public class GetConsultIncludeSpecifications : Specification<ConsultEntity>
         Query.Include(x => x.Patient);
         Query.Include(x => x.ComplementaryTest);
         Query.Include(x => x.Image);
+        
+        Query.Include(x => x.UserCreatedBy);
 
         Query.Where(x => x.IsDeleted == false);
     }

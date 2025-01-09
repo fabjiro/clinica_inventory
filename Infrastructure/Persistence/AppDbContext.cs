@@ -33,6 +33,7 @@ public partial class AppDbContext : DbContext
             .HasForeignKey(u => u.AvatarId)
             .OnDelete(DeleteBehavior.Restrict);
         
+        
 
         modelBuilder.Entity<UserEntity>().Property(e => e.AvatarId).IsRequired().HasDefaultValue(Guid.Parse(DefaulConst.DefaultAvatarUserId));
 

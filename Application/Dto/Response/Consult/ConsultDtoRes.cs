@@ -1,6 +1,7 @@
 using Application.Dto.Response.Exam;
 using Application.Dto.Response.Image;
 using Application.Dto.Response.Patient;
+using Application.Dto.Response.User;
 
 namespace Application.Dto.Response.Consult;
 
@@ -48,5 +49,8 @@ public class ConsultDtoRes
     public DateTime CreatedAt { get; set; }
 
     public int Count { get; set; }
+
+    public UserBasicResDto? UserCreatedBy { get; set; }
+
 
 }

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250108235004_ConsultCreateBy")]
+    partial class ConsultCreateBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +50,6 @@ namespace Infrastructure.Persistence.migrations
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid?>("CreatedByGuid")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -115,18 +115,21 @@ namespace Infrastructure.Persistence.migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("UserCreatedById")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal>("Weight")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedByGuid");
 
                     b.HasIndex("ExamComplementaryId");
 
                     b.HasIndex("ImageExamId");
 
                     b.HasIndex("PatientId");
+
+                    b.HasIndex("UserCreatedById");
 
                     b.ToTable("consult");
                 });
@@ -398,10 +401,6 @@ namespace Infrastructure.Persistence.migrations
 
             modelBuilder.Entity("ConsultEntity", b =>
                 {
-                    b.HasOne("Domain.Entities.UserEntity", "UserCreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedByGuid");
-
                     b.HasOne("Domain.Entities.ExamEntity", "ComplementaryTest")
                         .WithMany()
                         .HasForeignKey("ExamComplementaryId");
@@ -415,6 +414,10 @@ namespace Infrastructure.Persistence.migrations
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.UserEntity", "UserCreatedBy")
+                        .WithMany()
+                        .HasForeignKey("UserCreatedById");
 
                     b.Navigation("ComplementaryTest");
 
