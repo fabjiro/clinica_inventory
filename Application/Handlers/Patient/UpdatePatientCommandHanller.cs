@@ -76,6 +76,12 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
                 patient.TypeSex = request.TypeSex;
             }
 
+            if(request.BirthDate is not null)
+            {
+                Console.WriteLine(request.BirthDate);
+                patient.Birthday = request.BirthDate;
+            }
+
             if(request.CivilStatus is not null)
             {
                 var civilStatus = await _civilStatusRepository.GetByIdAsync((Guid)request.CivilStatus, cancellationToken);
