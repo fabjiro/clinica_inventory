@@ -20,7 +20,7 @@ public class CreateConsultDtoReq
     public string Recipe{get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Next Nextappointment is required")]
-    public string Nextappointment{get; set; } = string.Empty;
+    public DateTime? Nextappointment { get; set; }
 
     [Required(ErrorMessage = "Weight is required")]
     public decimal Weight{get; set; }
