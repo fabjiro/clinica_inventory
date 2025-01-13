@@ -13,6 +13,6 @@ public class InclusePatientSpecification : Specification<PatientEntity>
         Query.Include(x => x.CivilStatus);
         Query.Include(x => x.Rol);
 
-        Query.OrderByDescending(x => x.CreatedAt);
+        Query.OrderBy(x => x.Name);
     }
 }
