@@ -53,7 +53,7 @@ public class PatientController : ControllerBase
                 dto.ContactPerson,
                 dto.ContactPhone,
                 dto.Age,
-                (DateTime)dto.Birthday!,
+                Birthday: DateTime.SpecifyKind(dto.Birthday!.Value, DateTimeKind.Utc),
                 Guid.Parse(dto.TypeSex),
                 Guid.Parse(dto.CivilStatus),
                 Avatar: dto.Avatar
@@ -112,7 +112,7 @@ public class PatientController : ControllerBase
                 ContactPerson: dto.ContactPerson,
                 ContactPhone: dto.ContactPhone,
                 Age: dto.Age,
-                BirthDate: dto.Birthday,
+                BirthDate: dto.Birthday != null ? DateTime.SpecifyKind(dto.Birthday.Value, DateTimeKind.Utc) : null,
                 TypeSex: dto.TypeSex is not null ? Guid.Parse(dto.TypeSex) : null,
                 CivilStatus: dto.CivilStatus is not null ? Guid.Parse(dto.CivilStatus) : null,
                 Avatar: dto.Avatar
