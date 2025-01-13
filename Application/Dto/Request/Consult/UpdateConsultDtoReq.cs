@@ -16,7 +16,7 @@ public class UpdateConsultDtoReq
 
     public string? Recipe { get; set; }
 
-    public string? Nextappointment { get; set; }
+    public DateTime? Nextappointment { get; set; }
 
     public decimal? Weight { get; set; }
 

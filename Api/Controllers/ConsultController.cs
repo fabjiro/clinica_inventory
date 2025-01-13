@@ -152,7 +152,7 @@ public class ConsultController : ControllerBase
                 DiastolicPressure: dto.DiastolicPressure,
                 ExamComplementaryId: dto.ExamComplementary != null ? Guid.Parse(dto.ExamComplementary) : null,
                 ImageExam: dto.ImageExam,
-                Nextappointment: dto.Nextappointment != null? DateTime.Parse( dto.Nextappointment) : null
+                Nextappointment: dto.Nextappointment != null ?  DateTime.SpecifyKind(dto.Nextappointment.Value, DateTimeKind.Utc) : null
             );
             var result = await _mediator.Send(command);
 
