@@ -74,8 +74,8 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
             if (avatarUrl is null)
             {
                 return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "Avatar not uploaded",}
-                });
+                        new () {ErrorMessage = "Avatar not uploaded",}
+                    });
             }
 
             var image = await _imageRepository.AddAsync(new ImageEntity(
@@ -84,33 +84,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
             ), cancellationToken);
 
 
-            if (user.AvatarId != Guid.Parse(DefaulConst.DefaultAvatarUserId))
-            {
-                // delete register db
-                var imageEntity = await _imageRepository.GetByIdAsync(user.AvatarId, cancellationToken);
-
-                if (imageEntity is null)
-                {
-                    return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                        new () {ErrorMessage = "Image not found",}
-                    });
-                }
-
-                user.AvatarId = image.Id;
-                await _userRepository.UpdateAsync(user, cancellationToken);
-
-
-                await Task.WhenAll([
-                    _imageRepository.DeleteAsync(imageEntity, cancellationToken),
-                    _uploaderRepository.Delete(imageEntity.OriginalUrl)
-                ]);
-
-            }
-            else
-            {
-                // new image
-                user.AvatarId = image.Id;
-            }
+            user.AvatarId = image.Id;
 
         }
 
