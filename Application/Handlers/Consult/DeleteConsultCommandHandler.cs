@@ -1,5 +1,6 @@
 using Application.Helpers;
 using Ardalis.Result;
+using Domain.Entities;
 using Domain.Interface;
 using MediatR;
 
@@ -8,10 +9,12 @@ namespace Application.Queries.Consult;
 public class DeleteConsultCommandHandler : IRequestHandler<DeleteConsultCommand, Result<Guid>>
 {
     private readonly IAsyncRepository<ConsultEntity> _repository;
+    private readonly IAsyncRepository<PatientEntity> _patientRepository;
 
-    public DeleteConsultCommandHandler(IAsyncRepository<ConsultEntity> repository)
+    public DeleteConsultCommandHandler(IAsyncRepository<ConsultEntity> repository, IAsyncRepository<PatientEntity> patientRepository)
     {
         _repository = repository;
+        _patientRepository = patientRepository;
     }
 
     public async Task<Result<Guid>> Handle(DeleteConsultCommand request, CancellationToken cancellationToken)
@@ -27,9 +30,14 @@ public class DeleteConsultCommandHandler : IRequestHandler<DeleteConsultCommand,
                 });
             }
 
+            var patient = await _patientRepository.GetByIdAsync(consult.PatientId, cancellationToken);
+
+            patient!.ConsultCount -= 1;
             consult.IsDeleted = true;
+
             consult.SetDeletedInfo(request.UserId);
 
+            await _patientRepository.UpdateAsync(patient, cancellationToken);
             await _repository.UpdateAsync(consult, cancellationToken);
 
             return Result.Success(consult.Id);
