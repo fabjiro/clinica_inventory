@@ -33,4 +33,19 @@ public class ReportController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpGet("consult-by-date")]
+    [Authorize]
+    public async Task<IActionResult> ConsultByDate()
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportConsultByDateQuery());
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
