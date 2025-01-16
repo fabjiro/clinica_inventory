@@ -1,4 +1,5 @@
 using Application.Helpers;
+using Application.Queries.Report;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,14 @@ public class ReportController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
+    [HttpGet("top-patient-by-consult")]
     [Authorize]
     public async Task<IActionResult> GetReport()
     {
         try
         {
-            var result = await _mediator.Send();
-            return Ok(result);
+            var result = await _mediator.Send(new ReportTopPatientQuery());
+            return Ok(result.Value);
         }
         catch (Exception ex)
         {
