@@ -22,7 +22,9 @@ public class ReportTopPatientQueryHandler : IRequestHandler<ReportTopPatientQuer
     {
         try
         {
-            var result = await _patientRepository.ListAsync(new GetTopPatientSpecifications(), cancellationToken);
+            var result = await _patientRepository.ListAsync(new GetTopPatientSpecifications(
+                take: request.Top
+            ), cancellationToken);
 
             return Result.Success(result);
         }

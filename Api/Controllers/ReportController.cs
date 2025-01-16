@@ -17,11 +17,15 @@ public class ReportController : ControllerBase
 
     [HttpGet("top-patient-by-consult")]
     [Authorize]
-    public async Task<IActionResult> GetReport()
+    public async Task<IActionResult> GetReport(
+        [FromQuery] int top = 5
+    )
     {
         try
         {
-            var result = await _mediator.Send(new ReportTopPatientQuery());
+            var result = await _mediator.Send(new ReportTopPatientQuery(
+                Top: top
+            ));
             return Ok(result.Value);
         }
         catch (Exception ex)
