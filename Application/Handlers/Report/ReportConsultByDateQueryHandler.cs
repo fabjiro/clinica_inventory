@@ -31,8 +31,6 @@ public class ReportConsultByDateQueryHandler : IRequestHandler<ReportConsultByDa
                 endDate: to
             ), cancellationToken);
 
-            Console.WriteLine(consults.Count());
-
             var result = consults
                 .GroupBy(i => i.CreatedAt.Date) // Agrupar por día (sin la hora)
                 .Select(g => new ReportConsultByDateDto
