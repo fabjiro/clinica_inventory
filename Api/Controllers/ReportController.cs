@@ -48,4 +48,19 @@ public class ReportController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpGet("count-patient-by-date")]
+    [Authorize]
+    public async Task<IActionResult> ConsultByDoctor()
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportConsultCountPatientByDateQuery());
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
