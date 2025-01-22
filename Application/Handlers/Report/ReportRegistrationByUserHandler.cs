@@ -13,14 +13,12 @@ namespace Application.Handlers.Report;
 
 public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistrationByUser, Result<List<ReportRegistrationByUserResDto>>>
 {
-    private readonly IAsyncRepository<PatientEntity> _patientRepository;
     private readonly IAsyncRepository<UserEntity> _userRepository;
     private readonly IAsyncRepository<ConsultEntity> _consultRepository;
     private readonly IMapper _mapper;
 
-    public ReportRegistrationByUserHandler(IAsyncRepository<PatientEntity> patientRepository, IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<ConsultEntity> consultRepository)
+    public ReportRegistrationByUserHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<ConsultEntity> consultRepository)
     {
-        _patientRepository = patientRepository;
         _mapper = mapper;
         _userRepository = userRepository;
         _consultRepository = consultRepository;

@@ -1,5 +1,6 @@
 using Application.Helpers;
 using Application.Queries.Report;
+using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,37 @@ public class ReportController : ControllerBase
                 StartDate: startDate,
                 EndDate: endDate
             ));
+
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
+
+    [HttpGet("register-patient-by-user")]
+    [Authorize]
+    public async Task<IActionResult> RegisterPatientByUser(
+        [FromQuery] string userId,
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+    )
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportRegistrationByUser(
+                StartDate: startDate,
+                EndDate: endDate,
+                UserId: userId
+            ));
+
+            if(result.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+
+            }
 
             return Ok(result.Value);
         }
