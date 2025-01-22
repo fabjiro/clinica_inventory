@@ -5,12 +5,23 @@ namespace Application.Specifications.Consult;
 public class GetConsultIncludeSpecifications : Specification<ConsultEntity>
 {
     public GetConsultIncludeSpecifications(
-        Guid? PatientId = null
+        Guid? PatientId = null,
+        DateTime? StartDate = null,
+        DateTime? EndDate = null
+
     )
     {
         if(PatientId is not null)
         {
             Query.Where(x => x.PatientId == PatientId);
+        }
+
+        if(StartDate is not null && EndDate is not null) {
+            Query.Where(x => x.CreatedAt >= StartDate && x.CreatedAt <= EndDate);
+        } else if(StartDate is not null) {
+            Query.Where(x => x.CreatedAt >= StartDate);
+        } else if(EndDate is not null) {
+            Query.Where(x => x.CreatedAt <= EndDate);
         }
 
 

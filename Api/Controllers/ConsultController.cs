@@ -66,11 +66,17 @@ public class ConsultController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+    )
     {
         try
         {
-            var result = await _mediator.Send(new GetAllConsultQuery());
+            var result = await _mediator.Send(new GetAllConsultQuery(
+                StartDate: startDate,
+                EndDate: endDate
+            ));
             return Ok(result.Value);
         }
         catch (Exception ex)

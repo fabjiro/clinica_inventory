@@ -24,7 +24,10 @@ public class GetAllConsultQueryHandler : IRequestHandler<GetAllConsultQuery, Res
     {
         try
         {
-            var result = await _repository.ListAsync(new GetConsultIncludeSpecifications(), cancellationToken);
+            var result = await _repository.ListAsync(new GetConsultIncludeSpecifications(
+                StartDate: request.StartDate,
+                EndDate: request.EndDate
+            ), cancellationToken);
 
             return Result.Success(_mapper.Map<List<ConsultDtoRes>>(result));
         }

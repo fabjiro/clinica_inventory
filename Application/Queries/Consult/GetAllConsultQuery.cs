@@ -4,4 +4,7 @@ using MediatR;
 
 namespace Application.Queries.Consult;
 
-public record GetAllConsultQuery : IRequest<Result<List<ConsultDtoRes>>>{};
+public record GetAllConsultQuery(
+    DateTime? StartDate = null,
+    DateTime? EndDate = null
+) : IRequest<Result<List<ConsultDtoRes>>>{};
