@@ -117,4 +117,26 @@ public class ReportController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+
+    [HttpGet("recent-diagnostics")]
+    [Authorize]
+    public async Task<IActionResult> RecentDiagnostics(
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+    )
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportDiagnosticsQuery(
+                StartDate: startDate,
+                EndDate: endDate
+            ));
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
