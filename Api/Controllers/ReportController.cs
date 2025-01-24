@@ -1,5 +1,6 @@
 using Application.Helpers;
 using Application.Queries.Report;
+using Application.Querys.Report;
 using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -154,6 +155,27 @@ public class ReportController : ControllerBase
                 EndDate: endDate
             ));
             
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
+
+    [HttpGet("master")]
+    [Authorize]
+    public async Task<IActionResult> Master(
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+    )
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportMasterQuery(
+                StartDate: startDate,
+                EndDate: endDate
+            ));
             return Ok(result.Value);
         }
         catch (Exception ex)

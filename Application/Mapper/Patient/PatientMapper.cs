@@ -13,5 +13,11 @@ public class PatientMapper : Profile
 
         CreateMap<PatientEntity, ReportRegisterPatientResDto>()
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")));
+
+        CreateMap<PatientEntity, ReportMasterResDto>()
+            .ForMember(dest => dest.NamePatient, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.PhonePatient, opt => opt.MapFrom(src => src.Phone))
+            .ForMember(dest => dest.ContactName, opt => opt.MapFrom(src => src.ContactPerson))
+            .ForMember(dest => dest.CountConsult, opt => opt.MapFrom(src => src.ConsultCount));
     }
 }
