@@ -139,4 +139,26 @@ public class ReportController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpGet("next-consults")]
+    [Authorize]
+    public async Task<IActionResult> NextConsults(
+        [FromQuery] DateTime? startDate = null,
+        [FromQuery] DateTime? endDate = null
+    )
+    {
+        try
+        {
+            var result = await _mediator.Send(new ReportNexConsultsQuery(
+                StartDate: startDate,
+                EndDate: endDate
+            ));
+            
+            return Ok(result.Value);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
+    }
 }
