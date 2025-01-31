@@ -130,8 +130,8 @@ public class ReportController : ControllerBase
         try
         {
             var result = await _mediator.Send(new ReportDiagnosticsQuery(
-                StartDate: startDate,
-                EndDate: endDate
+                StartDate: startDate != null ?  DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc) : null,
+                EndDate: endDate != null ?  DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc) : null
             ));
             return Ok(result.Value);
         }
