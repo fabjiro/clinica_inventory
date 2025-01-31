@@ -76,8 +76,8 @@ public class ReportController : ControllerBase
         try
         {
             var result = await _mediator.Send(new ReportRegisterPatientQuery(
-                StartDate: startDate,
-                EndDate: endDate
+                StartDate: startDate != null ?  DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc) : null,
+                EndDate: endDate != null ? DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc) : null
             ));
 
             return Ok(result.Value);
@@ -99,8 +99,8 @@ public class ReportController : ControllerBase
         try
         {
             var result = await _mediator.Send(new ReportRegistrationByUser(
-                StartDate: startDate,
-                EndDate: endDate,
+                StartDate: startDate != null ?  DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc) : null,
+                EndDate: endDate != null ? DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc) : null,
                 UserId: userId
             ));
 
@@ -151,8 +151,8 @@ public class ReportController : ControllerBase
         try
         {
             var result = await _mediator.Send(new ReportNexConsultsQuery(
-                StartDate: startDate,
-                EndDate: endDate
+                StartDate: startDate != null ?  DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc) : null,
+                EndDate: endDate != null ? DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc) : null
             ));
             
             return Ok(result.Value);
@@ -173,8 +173,8 @@ public class ReportController : ControllerBase
         try
         {
             var result = await _mediator.Send(new ReportMasterQuery(
-                StartDate: startDate,
-                EndDate: endDate
+                StartDate: startDate != null ?  DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc) : null,
+                EndDate: endDate != null ? DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc) : null
             ));
             return Ok(result.Value);
         }
