@@ -28,7 +28,7 @@ public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistratio
     {
         try
         {
-            var userEntity = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            var userEntity = await _userRepository.GetByIdAsync(Guid.Parse(request.UserId), cancellationToken);
 
             if (userEntity is null || userEntity.IsDeleted)
             {
@@ -47,12 +47,12 @@ public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistratio
                 cancellationToken
             );
 
-            var consultsDto = _mapper.Map<List<ReportRegistrationByUserResDto>>(consults);
-
+        
             return Result.Success(consultsDto);
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex);
             return Result.Error(ErrorHelper.GetExceptionError(ex));
         }
     }
