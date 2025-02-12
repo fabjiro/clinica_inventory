@@ -11,9 +11,8 @@ public class PatientMapper : Profile
     {
         CreateMap<PatientEntity, PatientResDto>();
 
-        CreateMap<PatientEntity, ReportRegisterPatientResDto>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")));
-
+        CreateMap<PatientEntity, ReportRegisterPatientResDto>();
+        
         CreateMap<PatientEntity, ReportMasterResDto>()
             .ForMember(dest => dest.NamePatient, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.PhonePatient, opt => opt.MapFrom(src => src.Phone))

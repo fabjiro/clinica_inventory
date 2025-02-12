@@ -47,6 +47,8 @@ public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistratio
                 cancellationToken
             );
 
+            var consultsDto = _mapper.Map<List<ReportRegistrationByUserResDto>>(consults);
+
         
             return Result.Success(consultsDto);
         }
