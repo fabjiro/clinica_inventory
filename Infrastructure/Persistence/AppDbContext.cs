@@ -21,6 +21,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<GroupEntity> GroupEntity { get; set; }
     public virtual DbSet<ExamEntity> ExamEntity { get; set; }
     public virtual DbSet<ConsultEntity> ConsultEntity { get; set; }
+    public virtual DbSet<SubRolEntity> SubRolEntity { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:Default", b => b.MigrationsAssembly("Infrastructure"));
