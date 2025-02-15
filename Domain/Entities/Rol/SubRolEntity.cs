@@ -17,12 +17,6 @@ public class SubRolEntity
     [Required]
     public Guid RolId { get; set; }
 
-    [Required]
-    public Guid UserId { get; set; }
-
-    [ForeignKey("UserId")]
-    public UserEntity? User { get; set; }
-
     [ForeignKey("RolId")]
     public RolEntity? Rol { get; set; }
 
