@@ -49,23 +49,9 @@ public class AddUserCommandHandler : IRequestHandler<AddUserCommand, Result<User
             var userEntity = new UserEntity(
                 request.Name,
                 request.Email,
-                PasswordHelper.HashPassword(request.Password!)
+                PasswordHelper.HashPassword(request.Password!),
+                request.RolId!.Value
             );
-
-            if (request.RolId != null)
-            {
-                var rol = await _rolRepository.GetByIdAsync(request.RolId.Value, cancellationToken);
-
-                if (rol is null)
-                {
-                    return Result<UserBasicResDto>.Invalid(new List<ValidationError> {
-                new () {ErrorMessage = "Rol not found",}
-            });
-                }
-
-                userEntity.RolId = rol.Id;
-
-            }
 
 
             if (request.Avatar is not null)

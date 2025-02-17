@@ -34,7 +34,7 @@ namespace Api.Middlewares
                 return;
             }
 
-            if ( requirement.AllowedRoles.Contains(user!.RolId))
+            if ( requirement.AllowedRoles.Contains(user!.SubRolId))
             {
                 context.Succeed(requirement);
             }

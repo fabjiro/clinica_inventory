@@ -12,6 +12,4 @@ public class RolEntity {
     [Required]
     [Column("name")]
     public string Name { get; set; } = String.Empty;
-
-     public ICollection<UserEntity> Users { get; set; } = new List<UserEntity>();
 }

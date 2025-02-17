@@ -25,20 +25,20 @@ public class UserEntity : BaseEntity
     [ForeignKey("AvatarId")]
     public ImageEntity? Avatar { get; set; }
 
-    public Guid RolId { get; set; }
+    public Guid SubRolId { get; set; }
 
     [Required]
-    [ForeignKey("RolId")]
-    public RolEntity? Rol { get; set; }
+    [ForeignKey("SubRolId")]
+    public SubRolEntity? Rol { get; set; }
 
     public UserEntity() { }
-    public UserEntity(string name,string email, string password  , Guid? rolId = null, Guid? avatarId = null)
+    public UserEntity(string name,string email, string password, Guid rolId, Guid? avatarId = null)
     {
         Id = Guid.NewGuid();
         Name = name;
         Email = email;
         Password = password;
-        RolId = rolId ?? Guid.Parse(RolConst.Consultation);
+        SubRolId = rolId;
         AvatarId = avatarId ?? Guid.Parse(DefaulConst.DefaultAvatarUserId);
     }
 }

@@ -53,7 +53,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
         }
 
         // update rol
-        if (request.rolId is not null && request.rolId != user.RolId)
+        if (request.rolId is not null && request.rolId != user.SubRolId)
         {
             var rol = await _rolRepository.GetByIdAsync(request.rolId.Value);
 
@@ -63,7 +63,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
                     new () {ErrorMessage = "Rol not found",}
                 });
             }
-            user.RolId = request.rolId.Value;
+            user.SubRolId = request.rolId.Value;
         }
 
         // update avatar
