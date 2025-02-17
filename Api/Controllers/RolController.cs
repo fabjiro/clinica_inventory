@@ -1,7 +1,9 @@
 
 using Application.Commands.Rol;
+using Application.Helpers;
 using Application.Queries.Rol;
 using Application.Querys.Rol;
+using Ardalis.Result;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -35,5 +37,25 @@ public class RolController : ControllerBase
     {
         var result = await _mediator.Send(command);
         return Ok(result);
+    }
+
+    [HttpDelete("/subrol/{id}")]
+    public async Task<IActionResult> DeleteSubRol(Guid id)
+    {
+        try
+        {
+            var result = await _mediator.Send(new DeleteSubRolCommand(id));
+
+            if (result.IsInvalid())
+            {
+                var invalidError = ErrorHelper.GetValidationErrors(result.ValidationErrors.ToList());
+                return Problem(invalidError, null, 400);
+            }
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Problem(ErrorHelper.GetExceptionError(ex));
+        }
     }
 }
