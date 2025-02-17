@@ -1,3 +1,4 @@
+using Application.Specifications.User;
 using Domain.Entities;
 using Domain.Interface;
 using Domain.Repository;
@@ -25,7 +26,9 @@ namespace Api.Middlewares
                 return;
             }
 
-            var user = await _userRepository.GetByIdAsync(Guid.Parse(userId));
+            var user = await _userRepository.FirstOrDefaultAsync(
+                new GetUserByIdIncludesSpecifications(Guid.Parse(userId))
+            );
 
 
             if(user == null)
@@ -34,7 +37,7 @@ namespace Api.Middlewares
                 return;
             }
 
-            if ( requirement.AllowedRoles.Contains(user!.SubRolId))
+            if ( requirement.AllowedRoles.Contains(user!.Rol!.RolId))
             {
                 context.Succeed(requirement);
             }
