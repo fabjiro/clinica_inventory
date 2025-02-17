@@ -58,4 +58,11 @@ public class RolController : ControllerBase
             return Problem(ErrorHelper.GetExceptionError(ex));
         }
     }
+
+    [HttpPut("/subrol")]
+    public async Task<IActionResult> UpdateSubRol([FromBody] UpdateSubRolCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result.Value);
+    }
 }
