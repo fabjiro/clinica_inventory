@@ -1,5 +1,6 @@
 
 using Application.Queries.Rol;
+using Application.Querys.Rol;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,13 @@ public class RolController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var categorys = await _mediator.Send(new GetAllRolQuery());
+        return Ok(categorys.Value);
+    }
+
+    [HttpGet("/subrol")]
+    public async Task<IActionResult> GetSubRol()
+    {
+        var categorys = await _mediator.Send(new GetAllSubRolQuery());
         return Ok(categorys.Value);
     }
 }
