@@ -23,6 +23,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<ConsultEntity> ConsultEntity { get; set; }
     public virtual DbSet<SubRolEntity> SubRolEntity { get; set; }
     public virtual DbSet<PageEntity> PageEntity { get; set; }
+    public virtual DbSet<PagePermitsEntity> PagePermitsEntity { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Name=ConnectionStrings:Default", b => b.MigrationsAssembly("Infrastructure"));
