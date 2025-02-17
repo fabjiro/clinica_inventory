@@ -1,4 +1,5 @@
 
+using Application.Commands.Rol;
 using Application.Queries.Rol;
 using Application.Querys.Rol;
 using AutoMapper;
@@ -27,5 +28,12 @@ public class RolController : ControllerBase
     {
         var categorys = await _mediator.Send(new GetAllSubRolQuery());
         return Ok(categorys.Value);
+    }
+
+    [HttpPost("/subrol")]
+    public async Task<IActionResult> AddSubRol([FromBody] AddSubRolCommad command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 }

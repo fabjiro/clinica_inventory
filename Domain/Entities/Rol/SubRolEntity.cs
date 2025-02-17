@@ -20,5 +20,14 @@ public class SubRolEntity
     [ForeignKey("RolId")]
     public RolEntity? Rol { get; set; }
 
+    public SubRolEntity() {}
+    public SubRolEntity(
+        string name,
+        Guid rolId
+    ) {
+        Id = Guid.NewGuid();
+        Name = name;
+        RolId = rolId;
+    }
     //  public ICollection<UserEntity> Users { get; set; } = new List<UserEntity>();
 }
