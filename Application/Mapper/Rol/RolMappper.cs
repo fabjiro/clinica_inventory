@@ -11,6 +11,8 @@ public class RolMappper : Profile
     {
         CreateMap<RolEntity, RolResDto>();
 
-        CreateMap<SubRolEntity, SubRolResDto>();
+        CreateMap<SubRolEntity, RolResDto>();
+
+        // CreateMap<SubRolEntity, RolResDto>();
     }
 }
