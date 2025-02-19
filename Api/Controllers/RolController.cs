@@ -8,8 +8,8 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public class RolController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -25,21 +25,21 @@ public class RolController : ControllerBase
         return Ok(categorys.Value);
     }
 
-    [HttpGet("/subrol")]
+    [HttpGet("subrol")]
     public async Task<IActionResult> GetSubRol()
     {
         var categorys = await _mediator.Send(new GetAllSubRolQuery());
         return Ok(categorys.Value);
     }
 
-    [HttpPost("/subrol")]
+    [HttpPost("subrol")]
     public async Task<IActionResult> AddSubRol([FromBody] AddSubRolCommad command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
     }
 
-    [HttpDelete("/subrol/{id}")]
+    [HttpDelete("subrol/{id}")]
     public async Task<IActionResult> DeleteSubRol(Guid id)
     {
         try
@@ -59,7 +59,7 @@ public class RolController : ControllerBase
         }
     }
 
-    [HttpPut("/subrol")]
+    [HttpPut("subrol")]
     public async Task<IActionResult> UpdateSubRol([FromBody] UpdateSubRolCommand command)
     {
         var result = await _mediator.Send(command);
