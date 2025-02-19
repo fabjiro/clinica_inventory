@@ -23,7 +23,7 @@ public class PageController : ControllerBase
         return Ok(categorys.Value);
     }
     
-    [HttpPost]
+    [HttpPost("toggle-page-permit")]
     public async Task<IActionResult> TogglePageWithRol(TogglePagePermitCommand command)
     {
         var result = await _mediator.Send(command);
