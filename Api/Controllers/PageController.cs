@@ -1,5 +1,6 @@
 
 
+using Application.Commands.Page;
 using Application.Queries.Page;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,12 @@ public class PageController : ControllerBase
     {
         var categorys = await _mediator.Send(new GetAllPageQuery());
         return Ok(categorys.Value);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> TogglePageWithRol(TogglePagePermitCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return Ok(result.Value);
     }
 }
