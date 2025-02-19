@@ -9,6 +9,7 @@ public class GetUserByIdIncludesSpecifications : SingleResultSpecification<UserE
     {
         Query.Where(x => x.Id == id);
         Query.Include(x => x.Rol);
+        Query.Include(x => x.Rol!.Rol);
         Query.Include(x => x.Avatar);
     }
 }
