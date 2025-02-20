@@ -10,5 +10,5 @@ public class UserBasicResDto
     public string Email { get; set; } = string.Empty;
     public SubRolResDto? Rol { get; set; }
     public ImageResDto? Avatar { get; set; }
-   
+    public List<string>? Routes { get; set; }
 }
