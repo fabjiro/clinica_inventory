@@ -34,5 +34,7 @@ public class GetConsultIncludeSpecifications : Specification<ConsultEntity>
             Query.Include(x => x.UserCreatedBy!.Rol);
 
         Query.Where(x => x.IsDeleted == false);
+
+        Query.OrderByDescending(x => x.CreatedAt);
     }
 }
