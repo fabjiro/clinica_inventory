@@ -17,10 +17,12 @@ public class ConsultMapper : Profile
 
         
         CreateMap<ConsultEntity, DiagnosticsResDto>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient!.Name));
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient!.Name))
+            .ForMember(dest => dest.Diagnostic, opt => opt.MapFrom(src => src.Diagnosis));
 
         CreateMap<ConsultEntity, ReportRecentConsultResDto>()
-            .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name));
+            .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
+            .ForMember(dest => dest.Diagnostic, opt => opt.MapFrom(src => src.Diagnosis));
 
         CreateMap<ConsultEntity, ReportNextConsultsResDto>()
             .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
