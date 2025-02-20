@@ -14,12 +14,12 @@ namespace Application.Handlers.User;
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Result<UserBasicResDto>>
 {
     private readonly IAsyncRepository<UserEntity> _userRepository;
-    private readonly IAsyncRepository<RolEntity> _rolRepository;
+    private readonly IAsyncRepository<SubRolEntity> _rolRepository;
     private readonly IAsyncRepository<ImageEntity> _imageRepository;
     private readonly IUploaderRepository _uploaderRepository;
     private readonly IMapper _mapper;
 
-    public UpdateUserCommandHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<RolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
+    public UpdateUserCommandHandler(IMapper mapper, IAsyncRepository<UserEntity> userRepository, IAsyncRepository<SubRolEntity> rolRepository, IAsyncRepository<ImageEntity> imageRepository, IUploaderRepository uploaderRepository)
     {
         _userRepository = userRepository;
         _mapper = mapper;
@@ -55,7 +55,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Resul
         // update rol
         if (request.rolId is not null && request.rolId != user.SubRolId)
         {
-            var rol = await _rolRepository.GetByIdAsync(request.rolId.Value);
+            var rol = await _rolRepository.GetByIdAsync(request.rolId.Value, cancellationToken);
 
             if (rol is null)
             {
