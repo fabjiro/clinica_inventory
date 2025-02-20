@@ -1,6 +1,7 @@
 using Application.Dto.Response.Rol;
 using Application.Helpers;
 using Application.Querys.Rol;
+using Application.Specifications.Rol;
 using Ardalis.Result;
 using AutoMapper;
 using Domain.Entities;
@@ -24,7 +25,7 @@ public class GetAllSubRolQueryHandler : IRequestHandler<GetAllSubRolQuery, Resul
     {
         try
         {
-            var result = await _subRolRepository.ListAsync(cancellationToken);
+            var result = await _subRolRepository.ListAsync(new SubRolByIdIncludesSpecifications(), cancellationToken);
             return Result.Success(_mapper.Map<List<SubRolResDto>>(result));
         }
         catch (Exception ex)
