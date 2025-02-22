@@ -44,7 +44,7 @@ public class ConsultDtoRes
 
     public string Recipe { get; set; } = string.Empty;
 
-    public string Nextappointment { get; set; } = string.Empty;
+    public DateTime Nextappointment { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
