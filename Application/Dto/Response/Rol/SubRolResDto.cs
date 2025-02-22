@@ -1,4 +1,5 @@
 using Application.Dto.Request.Rol;
+using Domain.Entities;
 
 namespace Application.Dto.Response.Rol;
 
@@ -10,4 +11,5 @@ public class SubRolResDto
 
     public RolResDto? Rol { get; set; }
 
+    public List<PageEntity>? Pages { get; set; }
 }
