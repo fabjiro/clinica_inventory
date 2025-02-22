@@ -123,7 +123,7 @@ public class UpdateConsultCommandHandler : IRequestHandler<UpdateConsultCommand,
 
              if(request.ImageExam is not null)
              {
-                if(consult.ExamComplementaryId is null)
+                if(request.ExamComplementaryId is null)
                 {
                     return Result.Invalid(new List<ValidationError> {
                         new () {ErrorMessage = "Exam not found",}
