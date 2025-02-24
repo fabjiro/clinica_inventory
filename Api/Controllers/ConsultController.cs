@@ -46,7 +46,8 @@ public class ConsultController : ControllerBase
                 OxygenSaturation: dto.OxygenSaturation,
                 SystolicPressure: dto.SystolicPressure,
                 DiastolicPressure: dto.DiastolicPressure,
-                ExamComplementaryId: dto.ExamComplementary != null ? Guid.Parse(dto.ExamComplementary) : null
+                ExamComplementaryId: dto.ExamComplementary != null ? Guid.Parse(dto.ExamComplementary) : null,
+                ImageExam: dto.ImageExam
             );
             var result = await _mediator.Send(command);
 

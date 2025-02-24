@@ -75,33 +75,33 @@ public class AddConsultCommandHandler : IRequestHandler<AddConsultCommand, Resul
 
             if (request.ExamComplementaryId is not null)
             {
-                // if (request.ImageExam == null)
-                // {
-                //     return Result.Invalid(new List<ValidationError> {
-                //         new () {ErrorMessage = "Image not found",}
-                //     });
-                // }
+                if (request.ImageExam == null)
+                {
+                    return Result.Invalid(new List<ValidationError> {
+                        new () {ErrorMessage = "Image not found",}
+                    });
+                }
 
-                // var imageCloud = await _uploaderRepository.Upload(request.ImageExam);
+                var imageCloud = await _uploaderRepository.Upload(request.ImageExam);
 
-                // if (imageCloud is null)
-                // {
-                //     return Result.Invalid(new List<ValidationError> {
-                //         new () {ErrorMessage = "Image not uploaded",}
-                //     });
-                // }
+                if (imageCloud is null)
+                {
+                    return Result.Invalid(new List<ValidationError> {
+                        new () {ErrorMessage = "Image not uploaded",}
+                    });
+                }
 
-                // var imageEntity = await _imageRepository.AddAsync(new ImageEntity(imageCloud, imageCloud), cancellationToken);
-                // var examEntity = await _examRepository.GetByIdAsync((Guid)request.ExamComplementaryId, cancellationToken);
+                var imageEntity = await _imageRepository.AddAsync(new ImageEntity(imageCloud, imageCloud), cancellationToken);
+                var examEntity = await _examRepository.GetByIdAsync((Guid)request.ExamComplementaryId, cancellationToken);
 
-                // if (examEntity is null)
-                // {
-                //     return Result.Invalid(new List<ValidationError> {
-                //         new () {ErrorMessage = "Exam not found",}
-                //     });
-                // }
+                if (examEntity is null)
+                {
+                    return Result.Invalid(new List<ValidationError> {
+                        new () {ErrorMessage = "Exam not found",}
+                    });
+                }
 
-                // consultEntity.ImageExamId = imageEntity.Id;
+                consultEntity.ImageExamId = imageEntity.Id;
 
                 var ExamEntity = await _examRepository.GetByIdAsync((Guid)request.ExamComplementaryId, cancellationToken);
 
