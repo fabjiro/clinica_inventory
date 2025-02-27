@@ -41,7 +41,8 @@ public class GetAllSubRolQueryHandler : IRequestHandler<GetAllSubRolQuery, Resul
             for(int i = 0; i < resulMapped.Count; i++)
             {
                 var resultPage = await _pagePermitsRepository.ListAsync(new GetPagePermitSpecifications(
-                    rolId: resulMapped[i]!.Rol!.Id
+                    rolId: resulMapped[i]!.Id,
+                    include: true
                 ), cancellationToken);
 
                 resulMapped[i]!.Pages = resultPage.Select(x => x.Page).ToList()!;
