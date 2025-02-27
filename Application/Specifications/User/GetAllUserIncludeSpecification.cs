@@ -10,5 +10,7 @@ public class GetAllUserIncludeSpecification : Specification<UserEntity>
         Query.Where(x => !x.IsDeleted);
         Query.Include(x => x.Rol);
         Query.Include(x => x.Avatar);
+
+        Query.OrderByDescending(x => x.CreatedAt);
     }
 }

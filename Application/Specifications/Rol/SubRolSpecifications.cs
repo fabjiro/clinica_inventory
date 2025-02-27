@@ -8,6 +8,7 @@ namespace Application.Specifications.Rol
         public SubRolByIdIncludesSpecifications()
         {
             Query.Include(x => x.Rol);
+            Query.OrderByDescending(x => x.Name);
         }
     }
 }
