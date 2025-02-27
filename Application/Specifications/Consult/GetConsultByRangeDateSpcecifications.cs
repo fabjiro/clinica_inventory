@@ -29,6 +29,9 @@ public class GetConsultByRangeDateSpcecifications : Specification<ConsultEntity>
         if(include) {
             Query.Include(x => x.Patient);
             Query.Include(x => x.UserCreatedBy);
+            Query.Include(x => x.UserCreatedBy!.Avatar);
+            Query.Include(x => x.UserCreatedBy!.Rol);
+            Query.Include(x => x.UserCreatedBy!.Rol!.Rol);
         }
     }
 }
