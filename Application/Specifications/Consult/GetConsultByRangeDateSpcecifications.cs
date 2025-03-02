@@ -15,11 +15,11 @@ public class GetConsultByRangeDateSpcecifications : Specification<ConsultEntity>
         Query.Where(x => x.IsDeleted == false);
 
         if(startDate != null && endDate != null) {
-            Query.Where(x => x.CreatedAt >= startDate && x.CreatedAt <= endDate);
+            Query.Where(x => x.Nextappointment >= startDate && x.Nextappointment <= endDate);
         } else if(startDate != null) {
-            Query.Where(x => x.CreatedAt >= startDate);
+            Query.Where(x => x.Nextappointment >= startDate);
         } else if(endDate != null) {
-            Query.Where(x => x.CreatedAt <= endDate);
+            Query.Where(x => x.Nextappointment <= endDate);
         }
 
         if(userId != null) {
