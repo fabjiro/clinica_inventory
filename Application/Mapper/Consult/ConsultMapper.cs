@@ -27,6 +27,7 @@ public class ConsultMapper : Profile
         CreateMap<ConsultEntity, ReportNextConsultsResDto>()
             .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient!.Name))
             .ForMember(dest => dest.PatientPhone, opt => opt.MapFrom(src => src.Patient!.Phone))
-            .ForMember(dest => dest.ContactPerson, opt => opt.MapFrom(src => src.Patient!.ContactPerson));
+            .ForMember(dest => dest.ContactPerson, opt => opt.MapFrom(src => src.Patient!.ContactPerson))
+            .ForMember(dest => dest.ContactPhone, opt => opt.MapFrom(src => src.Patient!.ContactPhone));
     }
 }
