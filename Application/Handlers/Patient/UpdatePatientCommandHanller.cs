@@ -1,5 +1,6 @@
 using Application.Commands.Patient;
 using Application.Dto.Response.Patient;
+using Application.Specifications.Patient;
 using Application.Helpers;
 using Ardalis.Result;
 using AutoMapper;
@@ -28,6 +29,15 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
     {
         try
         {
+            var isUserExit = await _patientRepository.FirstOrDefaultAsync(new GetPatientByIdentification(request.Identification ?? string.Empty), cancellationToken);
+
+            if (isUserExit is not null)
+            {
+                return Result<PatientResDto>.Invalid(new List<ValidationError> {
+                    new () {ErrorMessage = "User already exists",}
+                });
+            }
+
             var patient = await _patientRepository.GetByIdAsync(request.Id, cancellationToken);
             if (patient is null)
             {
@@ -36,53 +46,53 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
                 });
             }
 
-            if(request.Name is not null)
+            if (request.Name is not null)
             {
                 patient.Name = request.Name;
             }
 
-            if(request.Identification is not null)
+            if (request.Identification is not null)
             {
                 patient.Identification = request.Identification;
             }
 
-            if(request.Phone is not null)
+            if (request.Phone is not null)
             {
                 patient.Phone = request.Phone;
             }
 
-            if(request.Address is not null)
+            if (request.Address is not null)
             {
                 patient.Address = request.Address;
             }
 
-            if(request.ContactPerson is not null)
+            if (request.ContactPerson is not null)
             {
                 patient.ContactPerson = request.ContactPerson;
             }
 
-            if(request.ContactPhone is not null)
+            if (request.ContactPhone is not null)
             {
                 patient.ContactPhone = request.ContactPhone;
             }
 
-            if(request.Age is not null)
+            if (request.Age is not null)
             {
                 patient.Age = request.Age;
             }
 
-            if(request.TypeSex is not null)
+            if (request.TypeSex is not null)
             {
                 patient.TypeSex = request.TypeSex;
             }
 
-            if(request.BirthDate is not null)
+            if (request.BirthDate is not null)
             {
                 Console.WriteLine(request.BirthDate);
                 patient.Birthday = request.BirthDate;
             }
 
-            if(request.CivilStatus is not null)
+            if (request.CivilStatus is not null)
             {
                 var civilStatus = await _civilStatusRepository.GetByIdAsync((Guid)request.CivilStatus, cancellationToken);
 
@@ -92,11 +102,11 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
                         new () {ErrorMessage = "Civil Status not found",}
                     });
                 }
-                
+
                 patient.CivilStatusId = civilStatus.Id;
             }
 
-            if(request.Rol is not null)
+            if (request.Rol is not null)
             {
                 var rol = await _rolRepository.GetByIdAsync((Guid)request.Rol, cancellationToken);
 
@@ -107,7 +117,7 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
                     });
 
                 }
-                
+
                 patient.RolId = rol.Id;
             }
 
