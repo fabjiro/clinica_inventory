@@ -23,12 +23,12 @@ public class ReportRecentDiagnosticsQueryHandler : IRequestHandler<ReportRecentD
     {
         try
         {
-            var consults = await _consultRepository.ListAsync(new GetConsultByRangeDateSpcecifications(
+            var consults = await _consultRepository.ListAsync(new GetConsultByRangeDateSpcecificationss(
                 startDate: request.StartDate,
                 endDate: request.EndDate,
                 include: true
             ), cancellationToken);
-            
+
             var consultsDto = _mapper.Map<List<ReportRecentConsultResDto>>(consults);
             return Result.Success(consultsDto);
         }

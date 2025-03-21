@@ -26,7 +26,7 @@ public class ReportDiagnosticsQueryHandler : IRequestHandler<ReportDiagnosticsQu
         try
         {
             var consults = await _consutlRepository.ListAsync(
-                new GetConsultByRangeDateSpcecifications(
+                new GetConsultByRangeDateSpcecificationss(
                     startDate: request.StartDate,
                     endDate: request.EndDate,
                     include: true

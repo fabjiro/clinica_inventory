@@ -38,7 +38,7 @@ public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistratio
             }
 
             var consults = await _consultRepository.ListAsync(
-                new GetConsultByRangeDateSpcecifications(
+                new GetConsultByRangeDateSpcecificationss(
                     startDate: request.StartDate,
                     endDate: request.EndDate,
                     userId: userEntity.Id.ToString(),
@@ -49,7 +49,7 @@ public class ReportRegistrationByUserHandler : IRequestHandler<ReportRegistratio
 
             var consultsDto = _mapper.Map<List<ReportRegistrationByUserResDto>>(consults);
 
-        
+
             return Result.Success(consultsDto);
         }
         catch (Exception ex)
