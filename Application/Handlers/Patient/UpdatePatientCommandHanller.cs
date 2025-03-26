@@ -29,14 +29,14 @@ public class UpdatePatientCommandHanller : IRequestHandler<UpdatePatientCommand,
     {
         try
         {
-            var isUserExit = await _patientRepository.FirstOrDefaultAsync(new GetPatientByIdentification(request.Identification ?? string.Empty), cancellationToken);
+            // var isUserExit = await _patientRepository.FirstOrDefaultAsync(new GetPatientByIdentification(request.Identification ?? string.Empty), cancellationToken);
 
-            if (isUserExit is not null)
-            {
-                return Result<PatientResDto>.Invalid(new List<ValidationError> {
-                    new () {ErrorMessage = "User already exists",}
-                });
-            }
+            // if (isUserExit is not null)
+            // {
+            //     return Result<PatientResDto>.Invalid(new List<ValidationError> {
+            //         new () {ErrorMessage = "User already exists",}
+            //     });
+            // }
 
             var patient = await _patientRepository.GetByIdAsync(request.Id, cancellationToken);
             if (patient is null)
